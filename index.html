@@ -1,11 +1,432 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>My Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Todd Miller — Graphic Designer, Brand Designer, Web Developer, and Creative Problem Solver." />
+  <title>Todd Miller | Design Portfolio</title>
+  <style>
+    :root {
+      --ink: #162430;
+      --ink-soft: #4f5b64;
+      --accent: #b58a52;
+      --paper: #ffffff;
+      --surface: #f3f5f6;
+      --line: #d9dee2;
+      --max-width: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+    img { display: block; width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(calc(100% - 40px), var(--max-width)); margin-inline: auto; }
+    .section { padding: 96px 0; }
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+    h1,h2,h3,p { margin-top: 0; }
+    h1 {
+      max-width: 900px;
+      margin-bottom: 24px;
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      line-height: 0.93;
+      letter-spacing: -0.055em;
+    }
+    h2 {
+      max-width: 760px;
+      margin-bottom: 24px;
+      font-size: clamp(2.25rem, 5vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: -0.045em;
+    }
+    h3 { margin-bottom: 10px; font-size: 1.35rem; line-height: 1.2; }
+    .lead {
+      max-width: 760px;
+      margin-bottom: 0;
+      color: var(--ink-soft);
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      line-height: 1.65;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff;
+      font-weight: 700;
+      transition: 160ms ease;
+    }
+    .button:hover,.button:focus-visible { background: transparent; color: var(--ink); }
+    .button.secondary { background: transparent; color: var(--ink); }
+    .button.secondary:hover,.button.secondary:focus-visible { background: var(--ink); color: #fff; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(217,222,226,.85);
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(14px);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 76px;
+      gap: 24px;
+    }
+    .brand {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      color: var(--ink-soft);
+      font-size: .92rem;
+      font-weight: 700;
+    }
+    .nav-links a:hover,.nav-links a:focus-visible { color: var(--accent); }
+
+    .hero {
+      display: grid;
+      min-height: calc(100vh - 76px);
+      align-items: center;
+      padding: 72px 0;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1.15fr) minmax(280px,.85fr);
+      gap: 54px;
+      align-items: center;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+    .hero-art {
+      position: relative;
+      min-height: 580px;
+      overflow: hidden;
+      background: linear-gradient(135deg,#dfe4e7,#eef1f3);
+    }
+    .hero-art::after {
+      position: absolute;
+      content: "";
+      right: 22px;
+      bottom: 22px;
+      width: 120px;
+      height: 120px;
+      border: 1px solid rgba(255,255,255,.8);
+    }
+    .hero-label {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      z-index: 2;
+      max-width: 250px;
+      padding: 16px;
+      background: rgba(255,255,255,.92);
+      font-size: .9rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: .75fr 1.25fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .quote {
+      margin: 0;
+      padding-left: 24px;
+      border-left: 4px solid var(--accent);
+      font-size: clamp(1.7rem,3vw,2.6rem);
+      line-height: 1.25;
+      letter-spacing: -.03em;
+    }
+    .about-copy p { color: var(--ink-soft); font-size: 1.08rem; }
+
+    .work { background: var(--surface); }
+    .project {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 48px;
+      align-items: center;
+      padding: 52px 0;
+      border-top: 1px solid var(--line);
+    }
+    .project:last-child { border-bottom: 1px solid var(--line); }
+    .project.reverse .project-media { order: 2; }
+    .project.reverse .project-copy { order: 1; }
+    .project-media {
+      min-height: 420px;
+      background: linear-gradient(135deg,#d7dce1,#eef1f3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #69727a;
+      text-align: center;
+      padding: 24px;
+    }
+    .project-copy p { color: var(--ink-soft); }
+    .project-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 24px; }
+    .tag {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink-soft);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 18px;
+      margin-top: 32px;
+    }
+    .case-card {
+      padding: 22px;
+      border-top: 4px solid var(--ink);
+      background: #fff;
+    }
+    .case-card strong { display: block; margin-bottom: 8px; }
+    .case-card span { color: var(--ink-soft); font-size: .92rem; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12,1fr);
+      gap: 18px;
+    }
+    .gallery-item {
+      min-height: 260px;
+      overflow: hidden;
+      background: linear-gradient(135deg,#e3e7ea,#f4f6f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #69727a;
+      text-align: center;
+      padding: 20px;
+    }
+    .gallery-item.wide { grid-column: span 8; }
+    .gallery-item.narrow { grid-column: span 4; }
+    .gallery-item.half { grid-column: span 6; }
+
+    .process { background: var(--ink); color: #fff; }
+    .process .lead { color: #cad3d9; }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 1px;
+      margin-top: 42px;
+      background: rgba(255,255,255,.18);
+    }
+    .process-step { min-height: 240px; padding: 28px; background: var(--ink); }
+    .process-number {
+      margin-bottom: 50px;
+      color: var(--accent);
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+    }
+    .process-step p { color: #cbd3d8; }
+
+    .contact-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 36px;
+      align-items: end;
+      padding: 48px;
+      background: var(--surface);
+    }
+    .contact-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 24px;
+      color: var(--ink-soft);
+    }
+    .site-footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--line);
+      color: var(--ink-soft);
+      font-size: .9rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,.about-grid,.project,.contact-panel { grid-template-columns: 1fr; }
+      .project.reverse .project-media,.project.reverse .project-copy { order: initial; }
+      .hero-art { min-height: 420px; }
+      .case-grid,.process-grid { grid-template-columns: repeat(2,1fr); }
+      .gallery-item.wide,.gallery-item.narrow,.gallery-item.half { grid-column: span 6; }
+    }
+
+    @media (max-width: 640px) {
+      .section { padding: 72px 0; }
+      .nav { align-items: flex-start; flex-direction: column; padding: 18px 0; }
+      .nav-links { gap: 14px; }
+      .hero { min-height: auto; }
+      .hero-art { min-height: 360px; }
+      .case-grid,.process-grid { grid-template-columns: 1fr; }
+      .gallery-item.wide,.gallery-item.narrow,.gallery-item.half { grid-column: 1 / -1; }
+      .contact-panel { padding: 28px; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to My Portfolio</h1>
-    <p>Hi, I am a developer. Here is my work!</p>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top">Todd Miller</a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Graphic Designer · Brand Designer · Web Developer</p>
+          <h1>Designing brands. Solving problems. Creating possibilities.</h1>
+          <p class="lead">I create visual identities, websites, marketing materials, and product experiences by asking one question: not only what is this—but what could it become?</p>
+          <div class="hero-actions">
+            <a class="button" href="#work">View selected work</a>
+            <a class="button secondary" href="Todd-Miller-Resume.pdf">Download resume</a>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="hero-label">Replace this area with a strong Ingrain lifestyle image, project collage, or signature piece.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <blockquote class="quote">“I’m drawn to the project others do not want—or believe cannot be done.”</blockquote>
+        <div class="about-copy">
+          <p class="eyebrow">Design Philosophy</p>
+          <h2>A designer who sees possibilities where others see limitations.</h2>
+          <p>My background spans graphic design, brand development, web development, digital production, photography, data analysis, craftsmanship, and business ownership.</p>
+          <p>I am known for determination, artistic ability, unconventional thinking, and a willingness to keep working until a difficult problem has a clear, useful, and visually compelling solution.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section work" id="work">
+      <div class="container">
+        <p class="eyebrow">Selected Work</p>
+        <h2>Case studies built around real design problems.</h2>
+
+        <article class="project">
+          <div class="project-media">Ingrain Wood Co. project image</div>
+          <div class="project-copy">
+            <p class="eyebrow">Case Study 01</p>
+            <h3>Ingrain Wood Co.</h3>
+            <p>Built a premium woodworking brand from the ground up, including identity, website, product concepts, packaging, signage, brochures, social media, product imagery, mockups, and customer-facing brand materials.</p>
+            <div class="project-meta">
+              <span class="tag">Brand Identity</span><span class="tag">Website Design</span><span class="tag">Packaging</span><span class="tag">Photography</span><span class="tag">Creative Direction</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project reverse">
+          <div class="project-media">Office Evolution website image</div>
+          <div class="project-copy">
+            <p class="eyebrow">Case Study 02</p>
+            <h3>Office Evolution</h3>
+            <p>Designed, built, photographed, and maintained Drupal-based websites for approximately 20 franchise and company-owned locations.</p>
+            <div class="project-meta">
+              <span class="tag">Drupal</span><span class="tag">Responsive Design</span><span class="tag">Photography</span><span class="tag">CMS Management</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-media">FrameCraft Studio collateral image</div>
+          <div class="project-copy">
+            <p class="eyebrow">Case Study 03</p>
+            <h3>FrameCraft Studio</h3>
+            <p>Developed brochures, business cards, brand graphics, product imagery, and customer-facing collateral for a premium carved-frame concept.</p>
+            <div class="project-meta">
+              <span class="tag">Brochure Design</span><span class="tag">Print</span><span class="tag">Product Presentation</span><span class="tag">Brand Graphics</span>
+            </div>
+          </div>
+        </article>
+
+        <div class="case-grid">
+          <div class="case-card"><strong>Alltel Knowledge Base</strong><span>Enterprise knowledge management, internal tools, reporting, analytics, and process improvement.</span></div>
+          <div class="case-card"><strong>Penton Media</strong><span>Trade-show websites, CMS development, branded event content, SEO, and digital production.</span></div>
+          <div class="case-card"><strong>Selected Identity Work</strong><span>Logos, vector graphics, signage, icons, business cards, and promotional materials.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow">Visual Gallery</p>
+        <h2>A curated mix of identity, print, digital, and product work.</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item wide">Brand identity project</div>
+          <div class="gallery-item narrow">Business card design</div>
+          <div class="gallery-item half">Website design</div>
+          <div class="gallery-item half">Packaging design</div>
+          <div class="gallery-item narrow">Signage design</div>
+          <div class="gallery-item wide">Product photography</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section process" id="process">
+      <div class="container">
+        <p class="eyebrow">Creative Process</p>
+        <h2>From uncertain problem to complete solution.</h2>
+        <p class="lead">I do not stop at making something attractive. I consider the audience, message, production realities, customer experience, and what the project could become.</p>
+        <div class="process-grid">
+          <div class="process-step"><div class="process-number">01 · Discover</div><h3>Understand the real problem.</h3><p>Clarify the audience, purpose, constraints, goals, and opportunities.</p></div>
+          <div class="process-step"><div class="process-number">02 · Explore</div><h3>Challenge the obvious answer.</h3><p>Generate options, test assumptions, and consider unconventional directions.</p></div>
+          <div class="process-step"><div class="process-number">03 · Build</div><h3>Turn ideas into usable work.</h3><p>Develop the identity, layout, imagery, web experience, or production-ready assets.</p></div>
+          <div class="process-step"><div class="process-number">04 · Refine</div><h3>Improve every meaningful detail.</h3><p>Iterate, simplify, strengthen consistency, and prepare the final solution for use.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container contact-panel">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2>Let’s create something meaningful.</h2>
+          <div class="contact-list">
+            <span>Thornton, Colorado</span>
+            <a href="tel:+17207885476">(720) 788-5476</a>
+            <a href="mailto:toddmiller50@gmail.com">toddmiller50@gmail.com</a>
+          </div>
+        </div>
+        <a class="button" href="mailto:toddmiller50@gmail.com">Start a conversation</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 Todd Miller. Graphic Design, Brand Design, and Web Development.</div>
+  </footer>
 </body>
 </html>
